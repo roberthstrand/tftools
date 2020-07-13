@@ -12,7 +12,7 @@
 RootModule = 'tftools.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,7 +69,7 @@ RequiredAssemblies = @("System.IO.Compression.FileSystem")
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Install-Terraform'
+FunctionsToExport = @("Install-Terraform","Remove-Terraform","Set-TerraformVersion","Get-TerraformVersion")
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = ''
@@ -107,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'https://github.com/roberthstrand/tftools/releases'
 
         # Prerelease string of this module
         # Prerelease = ''
@@ -123,7 +123,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'https://github.com/roberthstrand/tftools/blob/master/docs/index.md'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
