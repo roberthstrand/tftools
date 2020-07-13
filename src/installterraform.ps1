@@ -22,11 +22,11 @@ function Install-Terraform {
             default {$tfPath = $home + "/.tftools"}
         }
         
-        # Check if the working path exists, create it if it doesn't
+        # Check if the working directory exists, create it if it doesn't
         try { 
             New-Item -Path $tfPath -ItemType Directory -ErrorAction Stop | Out-Null
         } catch { 
-            Write-Host "Working folder found..." -ForegroundColor Green
+            Write-Host "Working directory found..." -ForegroundColor Green
         }
 
         # If the version parameter wasn't used, ask the user what version they want installed
@@ -34,16 +34,15 @@ function Install-Terraform {
         if (!$Version) {
             Write-Host "What version do you want?"
             do {
-                Write-Host "Version number, (l)atest or (b)eta-latest" -ForegroundColor Yellow
-                $userResponse = Read-Host "#"
+                $userResponse = Read-Host "Version number, (l)atest or (b)eta-latest \n"
                 $Version      = $userResponse
             } while ($userResponse -notmatch "(latest)|(l\b)|(beta-latest)|(b\b)|([0-9]+\.[0-9]+\.[0-9])")
         } elseif ($Version -eq "latest") {
-            Write-Host "Fetching the latest version of Terraform" -ForegroundColor Green
+            Write-Host "Fetching the latest version of Terraform" -ForegroundColor Yellow
         } elseif ($Version -eq "beta-latest") {
-            Write-Host "Fetching the latest beta version of Terraform" -ForegroundColor Green
+            Write-Host "Fetching the latest beta version of Terraform" -ForegroundColor Yellow
         } elseif ($Version -like "*.*.*") {
-            Write-Host "Fetching Terraform v$Version" -ForegroundColor Green
+            Write-Host "Fetching Terraform v$Version" -ForegroundColor Yellow
         }
         # To avoid existential crisis, we want to check that the version asked for is available.
         # Also, if latest or beta-latest is requested, we need to figure out what that is.
@@ -57,7 +56,7 @@ function Install-Terraform {
         # If version is set to latest, we download the latest release if it doesn't already exist in our working path
         if (($Version -eq "latest") -or ($Version -eq "l")) {
             $Version = $tfReleases[0]
-            if (Get-ChildItem -Path "$tfPath/$Version" | Select-Object -Property Exists) {
+            if (Get-ChildItem -Path "$tfPath/$Version" -ErrorAction SilentlyContinue | Select-Object -Property Exists) {
                 Write-Error "Version already exist"
                 break
             }
@@ -73,7 +72,6 @@ function Install-Terraform {
             Write-Progress "Downloading Terraform v$Version"
         }
     }
-    
     process {
         # Creating a temporary file to be used while downloading the release
         $tempFile       = [System.IO.Path]::GetTempFileName()
@@ -88,11 +86,14 @@ function Install-Terraform {
 
         # Unzip that sucker!
         Export-ZipFile -ZipFile $tempFile -OutputFolder "$tfPath/$version"
+
+        # Copy the terraform file to the WindowsApps directory, so you're able to execute it
+        Copy-Item -Path "$tfPath/$Version/terraform*" -Destination "$env:LOCALAPPDATA\Microsoft\WindowsApps" -Force
     }
     # Don’t adventures ever have an end? 
     # I suppose not. Someone else always has to carry on the story.
     end {
-        # Cleanup on isle "tempfolder"
+        # Cleanup on isle five
         Remove-Item -Path $tempFile
     }
 }

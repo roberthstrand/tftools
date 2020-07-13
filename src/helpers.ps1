@@ -23,5 +23,6 @@ function Export-ZipFile {
         [string]
         $OutputFolder
     )
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
     [System.IO.Compression.ZipFile]::ExtractToDirectory($ZipFile, $OutputFolder)
 }
