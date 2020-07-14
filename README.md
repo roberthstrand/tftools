@@ -29,6 +29,6 @@ I don't want to create anything that isn't cross-platform but to get a minimum v
 
 - [X] Windows 10, PowerShell 7.02
 - [X] Windows 10, PowerShell 5.1
+- [X] Linux WSL
+- [X] Ubuntu 20.04
 - [ ] Mac
-- [ ] Linux WSL
-- [ ] Ubuntu 20.04
