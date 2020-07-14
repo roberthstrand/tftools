@@ -10,6 +10,8 @@ There are times where you have to use a certain version of the Terraform CLI too
 
 ## Installation
 
+*If you already have Terraform installed by any other means, you want to remove that before installing Terraform with the module.*
+
 Installation is pretty simple. The module is published on [powershellgallery](https://www.powershellgallery.com/packages/tftools), so all you need to do is the following.
 
 ```powershell
