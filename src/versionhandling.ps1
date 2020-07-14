@@ -3,8 +3,8 @@ function Get-TerraformVersion {
     Write-Host "Versions of Terraform, switch active version by using Set-TerraformVersion"
     
     # Get the library path and get the currently available versions
-    Set-tftoolsPath
-    $versionsAvailable = (Get-ChildItem $tfPath).Name
+    Set-PlatformVariables
+    $versionsAvailable = (Get-ChildItem $tfPath -Directory).Name
     
     # Find out what the current version of Terraform is, or give a warning of there are none
     try {
@@ -30,13 +30,19 @@ function Set-TerraformVersion {
         [string]
         $Version
     )
-    switch ($psversiontable) {
-        (($psversiontable.PSVersion.Major -le 5) -or ($psversiontable.Platform -eq "Win32NT")) { $tfPath = $env:USERPROFILE + "\.tftools" }
-        default { $tfPath = $home + "/.tftools" }
-    }
+    Set-PlatformVariables
     try {
         Write-Host "Switching to Terraform v$Version" -ForegroundColor Magenta
-        Copy-Item -Path "$tfPath/$Version/terraform*" -Destination "$env:LOCALAPPDATA\Microsoft\WindowsApps" -Force -ErrorAction Stop
+        # Copy the terraform file to the WindowsApps directory on Windows, so you're able to execute it
+        # On linux, we copy the file to the library folder and add that to $Env:PATH through our $PROFILE
+        # TODO: Check whether the Unix flow will be the right one for all platforms, so that we can have one less switch, maybe...
+        switch ($machineOS) {
+            "linux_amd64" {
+                Copy-Item -Path "$tfPath/$Version/terraform" -Destination $tfPath -Force -ErrorAction Stop
+                chmod +x "$tfPath/terraform"
+            }
+            Default { Copy-Item -Path "$tfPath/$Version/terraform.exe" -Destination $execDir -Force -ErrorAction Stop}
+        }
     }
     catch {
         Write-Error "Version of Terraform not present in library"

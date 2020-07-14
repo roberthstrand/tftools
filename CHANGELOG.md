@@ -1,5 +1,11 @@
 # tftools Release History
 
+## 0.2.0 [2020-07-14]
+
+### Linux functionality in order
+
+Linux is operational. Starting to do testing on both Windows and Linux to make sure everything is working fine before making the code work on Mac as well.
+
 ## 0.1.0 [2020-07-13]
 
 ### Windows functionality in order
@@ -7,7 +13,7 @@
 - Version control with Get and Set-TerraformVersion
 - Remove-Terraform to delete versions from library 
 
-Functionality tested in Windows 10. The module is released to PowerShellGallery and made public.
+Functionality tested in Windows 10. The module will be released to PowerShellGallery and made public, when I'm able to work out some kinks with PowerShellGet.
 
 ## 0.0.1 [2020-07-11]
 

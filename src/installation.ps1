@@ -19,8 +19,8 @@ function Install-Terraform {
 
         # Write the logo, +1 to sexiness - if not disabled
         if (!$DisableLogo) { Write-tftoolsLogo }
-        # Figure out what version of PowerShell, and what platform the code is being ran on
-        Set-tftoolsPath
+        # Set platform specific variables, by determining what version of PowerShell is running and on what platform
+        Set-PlatformVariables
         # Check if the working directory exists, create it if it doesn't
         try { 
             New-Item -Path $tfPath -ItemType Directory -ErrorAction Stop | Out-Null
@@ -88,7 +88,7 @@ function Install-Terraform {
 
         # Downloading the release
         $downloadSplat = @{
-            uri             = "https://releases.hashicorp.com/terraform/" + $version + "/terraform_" + $version + "_windows_amd64.zip"
+            uri             = "https://releases.hashicorp.com/terraform/" + $version + "/terraform_" + $version + "_" + $machineOS + ".zip"
             OutFile         = $tempFile
             UseBasicParsing = $true
         }
@@ -97,17 +97,21 @@ function Install-Terraform {
         # Unzip that sucker!
         Export-ZipFile -ZipFile $tempFile -OutputFolder "$tfPath/$version"
 
-        # Copy the terraform file to the WindowsApps directory, so you're able to execute it
+        # Ask the user if they want to set the downloaded Terraform as the active version
         $userResponse = Read-Host "You want to set v$Version as the active version? `n(Y)es or (n)o?"
+        # If they answer yes...
         switch ($userResponse.ToLower()) {
-            y { Copy-Item -Path "$tfPath/$Version/terraform*" -Destination "$env:LOCALAPPDATA\Microsoft\WindowsApps" -Force }
+            y {
+                Set-TerraformVersion -Version $Version
+            }
+            Default { continue }
         }
     }
     # Don’t adventures ever have an end? 
     # I suppose not. Someone else always has to carry on the story.
     end {
-        Write-Host "Version downloaded!" -ForegroundColor Green
-        if ($userResponse -eq "y") { Write-Host "Activated!" -ForegroundColor Magenta }
+        Write-Host "Version downloaded" -ForegroundColor Green
+        if ($userResponse -eq "y") { Write-Host "And activated!" -ForegroundColor Magenta }
         # Cleanup on isle five
         Remove-Item -Path $tempFile
     }
@@ -120,7 +124,8 @@ function Remove-Terraform {
         [string]
         $Version
     )
-    Set-tftoolsPath
+    Set-PlatformVariables
+    try {
         Remove-Item "$tfPath/$Version" -Force -ErrorAction Stop
     }
     catch {

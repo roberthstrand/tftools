@@ -7,7 +7,7 @@ function Write-tftoolsLogo {
     Write-Host " / __/ /_/ __/ __ \/ __ \/ / ___/" -ForegroundColor DarkMagenta
     Write-Host "/ /_/ __/ /_/ /_/ / /_/ / (__  ) " -ForegroundColor DarkMagenta
     Write-Host "\__/_/  \__/\____/\____/_/____/  " -ForegroundColor DarkMagenta
-    Write-Host "                      v0.1.0     " -ForegroundColor DarkGray
+    Write-Host "                      v0.2.0     " -ForegroundColor DarkGray
 }
 # This one is pretty cool, and we could probably have used a different
 # module for working with Zip files but this is a cool scripting exercise
@@ -18,7 +18,7 @@ function Export-ZipFile {
         [ValidateNotNullOrEmpty()]
         [string]
         $ZipFile,
-        [Parameter(Position = 0)]
+        [Parameter(Position = 1)]
         [ValidateNotNullOrEmpty()]
         [string]
         $OutputFolder
@@ -26,10 +26,24 @@ function Export-ZipFile {
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     [System.IO.Compression.ZipFile]::ExtractToDirectory($ZipFile, $OutputFolder)
 }
-function Set-tftoolsPath {
+function Set-PlatformVariables {
     if ($PSVersionTable.Platform -eq "Win32NT") {
+        # Windows, PowerShell 6+
         $global:tfPath = $env:USERPROFILE + "\.tftools" 
-    } elseif ($PSVersionTable.Platform -eq "Unix") {
+        $global:machineOS = "windows_amd64"
+        $global:execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+    }
+    elseif ($PSVersionTable.Platform -eq "Unix") {
         $global:tfPath = $HOME + "/.tftools"
+        $global:machineOS = "linux_amd64"
+        if ($env:PATH -notlike "*$tfPath*") {
+            $env:PATH += ":/home/rs/.tftools"
+            '$env:PATH += ":/home/rs/.tftools"' | Add-Content -Path $PROFILE
+        }
+    }
+    elseif (!$PSVersionTable.Platform) {
+        # Windows, Windows PowerShell
+        $machineOS = "windows_amd64"
+        $execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
     }
 }
