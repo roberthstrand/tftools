@@ -20,12 +20,7 @@ function Install-Terraform {
         # Write the logo, +1 to sexiness - if not disabled
         if (!$DisableLogo) { Write-tftoolsLogo }
         # Figure out what version of PowerShell, and what platform the code is being ran on
-        # TODO - Issue #1
-        switch ($psversiontable) {
-            (($psversiontable.PSVersion.Major -le 5) -or ($psversiontable.Platform -eq "Win32NT")) { $tfPath = $env:USERPROFILE + "\.tftools" }
-            default { $tfPath = $home + "/.tftools" }
-        }
-        # ENDTODO
+        Set-tftoolsPath
         # Check if the working directory exists, create it if it doesn't
         try { 
             New-Item -Path $tfPath -ItemType Directory -ErrorAction Stop | Out-Null
@@ -125,13 +120,7 @@ function Remove-Terraform {
         [string]
         $Version
     )
-    # TODO - Issue #1
-    try {
-        switch ($psversiontable) {
-            (($psversiontable.PSVersion.Major -le 5) -or ($psversiontable.Platform -eq "Win32NT")) { $tfPath = $env:USERPROFILE + "\.tftools" }
-            default { $tfPath = $home + "/.tftools" }
-        }
-        # ENDTODO
+    Set-tftoolsPath
         Remove-Item "$tfPath/$Version" -Force -ErrorAction Stop
     }
     catch {

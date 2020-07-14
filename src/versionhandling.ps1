@@ -1,12 +1,18 @@
 function Get-TerraformVersion {
     Write-tftoolsLogo
     Write-Host "Versions of Terraform, switch active version by using Set-TerraformVersion"
-    if ( ($psversiontable.PSVersion.Major -le 5) -or ($psversiontable.Platform -eq "Win32NT") ) {
-        $versionsAvailable = (Get-ChildItem "$env:USERPROFILE\.tftools").Name
-    } else {
-        Write-Host "Not Windows"
+    
+    # Get the library path and get the currently available versions
+    Set-tftoolsPath
+    $versionsAvailable = (Get-ChildItem $tfPath).Name
+    
+    # Find out what the current version of Terraform is, or give a warning of there are none
+    try {
+        $activeVersion = ((terraform --version | select-string -Pattern "([0-9]+\.[0-9]+\.[0-9]+)").Matches.Value | Select-Object -First 1).Substring(1)
     }
-    $activeVersion = ((terraform --version | select-string -Pattern "([0-9]+\.[0-9]+\.[0-9]+)").Matches.Value | Select-Object -First 1).Substring(1)
+    catch {
+        Write-Warning "There are no versions of Terraform currently active."
+    }
     $versionsAvailable | ForEach-Object {
         if ($_ -match "($activeVersion\b)") {
             Write-host "* $_" -ForegroundColor Green

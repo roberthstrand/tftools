@@ -26,3 +26,10 @@ function Export-ZipFile {
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     [System.IO.Compression.ZipFile]::ExtractToDirectory($ZipFile, $OutputFolder)
 }
+function Set-tftoolsPath {
+    if ($PSVersionTable.Platform -eq "Win32NT") {
+        $global:tfPath = $env:USERPROFILE + "\.tftools" 
+    } elseif ($PSVersionTable.Platform -eq "Unix") {
+        $global:tfPath = $HOME + "/.tftools"
+    }
+}
