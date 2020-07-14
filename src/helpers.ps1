@@ -7,7 +7,7 @@ function Write-tftoolsLogo {
     Write-Host " / __/ /_/ __/ __ \/ __ \/ / ___/" -ForegroundColor DarkMagenta
     Write-Host "/ /_/ __/ /_/ /_/ / /_/ / (__  ) " -ForegroundColor DarkMagenta
     Write-Host "\__/_/  \__/\____/\____/_/____/  " -ForegroundColor DarkMagenta
-    Write-Host "                      v0.2.0     " -ForegroundColor DarkGray
+    Write-Host "                      v0.2.1     " -ForegroundColor DarkGray
 }
 # This one is pretty cool, and we could probably have used a different
 # module for working with Zip files but this is a cool scripting exercise
@@ -29,7 +29,7 @@ function Export-ZipFile {
 function Set-PlatformVariables {
     if ($PSVersionTable.Platform -eq "Win32NT") {
         # Windows, PowerShell 6+
-        $global:tfPath = $env:USERPROFILE + "\.tftools" 
+        $global:tfPath = $env:USERPROFILE + "\.tftools"
         $global:machineOS = "windows_amd64"
         $global:execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
     }
@@ -43,7 +43,8 @@ function Set-PlatformVariables {
     }
     elseif (!$PSVersionTable.Platform) {
         # Windows, Windows PowerShell
-        $machineOS = "windows_amd64"
-        $execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+        $global:tfPath = $env:USERPROFILE + "\.tftools" 
+        $global:machineOS = "windows_amd64"
+        $global:execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
     }
 }
