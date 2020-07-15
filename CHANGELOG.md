@@ -1,5 +1,11 @@
 # tftools Release History
 
+## 0.2.1 [2020-07-14]
+
+### Bugfixes
+
+Issues with running on Windows PowerShell 5.1 solved.
+
 ## 0.2.0 [2020-07-14]
 
 ### Linux functionality in order
