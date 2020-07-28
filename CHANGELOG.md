@@ -1,5 +1,13 @@
 # tftools Release History
 
+## 0.2.5 [2020-07-29]
+
+### Defining the latest version + bug fixes
+
+From now on, if trying to download the latest version you will get the latest numbered only version. Example, if the latest version is 0.13.0-rc1 then the latest numbered version (0.12.29) will be downloaded. 
+
+To download a beta or release candidate, you would now need to specify the version.
+
 ## 0.2.0 [2020-07-14]
 
 ### Linux functionality in order

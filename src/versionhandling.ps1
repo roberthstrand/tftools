@@ -8,7 +8,7 @@ function Get-TerraformVersion {
     
     # Find out what the current version of Terraform is, or give a warning of there are none
     try {
-        $activeVersion = ((terraform --version | select-string -Pattern "([0-9]+\.[0-9]+\.[0-9]+)").Matches.Value | Select-Object -First 1).Substring(1)
+        $activeVersion = ((terraform --version | select-string -Pattern "([\d]+.[\d]+.[\d]+-[\w]+[\d]+|[\d]+.[\d]+.[\d]+)").Matches.Value | Select-Object -First 1)
     }
     catch {
         Write-Warning "There are no versions of Terraform currently active."

@@ -16,7 +16,6 @@ function Install-Terraform {
     |                 - Mark Twain                  |
     +----------------------------------------------#>
     begin {
-
         # Write the logo, +1 to sexiness - if not disabled
         if (!$DisableLogo) { Write-tftoolsLogo }
         # Set platform specific variables, by determining what version of PowerShell is running and on what platform
@@ -28,7 +27,6 @@ function Install-Terraform {
         catch { 
             Write-Host "Working directory found..." -ForegroundColor Green
         }
-
         # If the version parameter wasn't used, ask the user what version they want installed
         # Can also be set to latest, or TODO:beta-latest 
         if (!$Version) {
@@ -36,7 +34,7 @@ function Install-Terraform {
             do {
                 $userResponse = Read-Host "Version number or (l)atest`n"
                 $Version = $userResponse
-            } while ($userResponse -notmatch "(latest)|(l\b)|(beta-latest)|(b\b)|([0-9]+\.[0-9]+\.[0-9])")
+            } while ($userResponse.ToLower() -notmatch "(latest)|(l\b)|(beta-latest)|(b\b)|([0-9]+\.[0-9]+\.[0-9]+)?(-[\S]+)?()")
         }
         elseif ($Version -eq "latest") {
             Write-Host "Fetching the latest version of Terraform" -ForegroundColor Yellow
@@ -52,65 +50,71 @@ function Install-Terraform {
 
         # Fetch the HashiCorp Terraform release page and stick it into an object
         $releasePageURL = "https://releases.hashicorp.com/terraform/"
-        $tfReleases = Invoke-WebRequest $releasePageURL -UseBasicParsing | Select-Object -ExpandProperty Content
+        [string]$tfReleases = Invoke-WebRequest $releasePageURL -UseBasicParsing | Select-Object -ExpandProperty Content
         # We then want to pick out all the releases available
-        $tfReleases = $tfReleases -split "`n" | Select-String -Pattern "/terraform/([0-9]+\.[0-9]+\.[0-9]+)/" |
+        [System.Collections.ArrayList]$tfReleases = $tfReleases -split "`n" | Select-String -Pattern '(?<=\/)([\d]+.[\d]+.[\d]+-[\w]+[\d]+|[\d]+.[\d]+.[\d]+)' |
         ForEach-Object { $_.Matches | ForEach-Object { $_.Groups[1].Value } }
         # If version is set to latest, we download the latest release if it doesn't already exist in our working path
         if (($Version -eq "latest") -or ($Version -eq "l")) {
-            $Version = $tfReleases[0]
-            if (Get-ChildItem -Path "$tfPath/$Version" -ErrorAction SilentlyContinue | Select-Object -Property Exists) {
-                Write-Error "Version already exist"
-                break
+            # We want the latest stable version, so if the latest version is beta, release candidate or simular, we'll try and find the last numbered release.
+            switch ($tfReleases[0] -match '-') {
+                $true { 
+                    $i = 0
+                    do {
+                        $i += 1
+                        $Version = $tfReleases[$i]
+                    } while ($Version -match '-')
+                }
+                Default { $Version = $tfReleases[0] }
             }
         }
         elseif ($tfReleases -notcontains $Version) {
             # Stops everything if the version requested doesn't exist
             Write-Error "Invalid version"
-            break
-        }
-        elseif ($tfReleases -contains $Version) {
-            # If the release exist, check wether or not it has already been downloaded
-            if (Get-ChildItem -Path "$tfPath/$Version" -ErrorAction SilentlyContinue | Select-Object -Property Exists) {
-                Write-Error "Version already exist"
-                break
-            }
-            else { Write-Progress "Downloading Terraform v$Version" }
-        }
-        else {
-            Write-Progress "Downloading Terraform v$Version"
+            exit
         }
     }
     process {
-        Write-Host "Downloading Terraform v$Version" -ForegroundColor Yellow
-        # Creating a temporary file to be used while downloading the release
-        $tempFile = [System.IO.Path]::GetTempFileName()
-
-        # Downloading the release
-        $downloadSplat = @{
-            uri             = "https://releases.hashicorp.com/terraform/" + $version + "/terraform_" + $version + "_" + $machineOS + ".zip"
-            OutFile         = $tempFile
-            UseBasicParsing = $true
-        }
-        Invoke-WebRequest @downloadSplat
-
-        # Unzip that sucker!
-        Export-ZipFile -ZipFile $tempFile -OutputFolder "$tfPath/$version"
-
-        # Ask the user if they want to set the downloaded Terraform as the active version
-        $userResponse = Read-Host "You want to set v$Version as the active version? `n(Y)es or (n)o?"
-        # If they answer yes...
-        switch ($userResponse.ToLower()) {
-            y {
-                Set-TerraformVersion -Version $Version
+        # If the release exist, check wether or not it has already been downloaded
+        switch (Test-Path -Path "$tfPath/$Version") {
+            $false {
+                Write-Progress "Downloading Terraform v$Version"
+                Write-Host "Downloading Terraform v$Version" -ForegroundColor Yellow
+            
+                # Creating a temporary file to be used while downloading the release
+                $tempFile = [System.IO.Path]::GetTempFileName()
+                
+                # Downloading the release
+                $downloadSplat = @{
+                    uri             = "https://releases.hashicorp.com/terraform/" + $version + "/terraform_" + $Version + "_" + $machineOS + ".zip"
+                    OutFile         = $tempFile
+                    UseBasicParsing = $true
+                }
+                Invoke-WebRequest @downloadSplat
+                
+                # Unzip that sucker!
+                Export-ZipFile -ZipFile $tempFile -OutputFolder "$tfPath/$Version"
+                
+                # Ask the user if they want to set the downloaded Terraform as the active version
+                $userResponse = Read-Host "You want to set v$Version as the active version? `n(Y)es or (n)o?"
+                # If they answer yes...
+                switch ($userResponse.ToLower()) {
+                    y {
+                        Set-TerraformVersion -Version $Version
+                    }
+                    Default { continue }
+                }
             }
-            Default { continue }
+            Default {
+                Write-Error "v$Version already exist"
+                exit
+            }
         }
     }
     # Don’t adventures ever have an end? 
     # I suppose not. Someone else always has to carry on the story.
     end {
-        Write-Host "Version downloaded" -ForegroundColor Green
+        Write-Host "v$Version downloaded" -ForegroundColor Green
         if ($userResponse -eq "y") { Write-Host "And activated!" -ForegroundColor Magenta }
         # Cleanup on isle five
         Remove-Item -Path $tempFile
