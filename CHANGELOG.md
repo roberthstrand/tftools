@@ -8,6 +8,12 @@ From now on, if trying to download the latest version you will get the latest nu
 
 To download a beta or release candidate, you would now need to specify the version.
 
+## 0.2.1 [2020-07-14]
+
+### Bugfixes
+
+Issues with running on Windows PowerShell 5.1 solved.
+
 ## 0.2.0 [2020-07-14]
 
 ### Linux functionality in order

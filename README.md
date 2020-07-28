@@ -10,6 +10,8 @@ There are times where you have to use a certain version of the Terraform CLI too
 
 ## Installation
 
+*If you already have Terraform installed by any other means, you want to remove that before installing Terraform with the module.*
+
 Installation is pretty simple. The module is published on [powershellgallery](https://www.powershellgallery.com/packages/tftools), so all you need to do is the following.
 
 ```powershell
@@ -29,6 +31,6 @@ I don't want to create anything that isn't cross-platform but to get a minimum v
 
 - [X] Windows 10, PowerShell 7.02
 - [X] Windows 10, PowerShell 5.1
-- [X] Ubuntu 20.04
 - [X] Linux WSL
+- [X] Ubuntu 20.04
 - [ ] Mac
