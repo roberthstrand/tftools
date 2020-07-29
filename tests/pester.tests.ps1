@@ -9,11 +9,14 @@ BeforeAll {
     # Check if a $profile exists, and create one if it doesn't.
     switch (Test-Path $PROFILE.CurrentUserCurrentHost -ErrorAction Stop) {
         false {
-            Write-Host "Checking if the .config folder is present..."
-            Test-Path $HOME/.config
-            Write-Host "Checking if the powershell config folder is present..."
-            Test-Path $HOME/.config/powershell
-            New-Item $HOME/.config/powershell -Type Directory
+            if (!Test-Path $HOME/.config) {
+                Write-Host "Checking if the .config folder is present..."
+                New-Item $HOME/.config -Type Directory
+            }
+            if (!Test-Path $HOME/.config/powershell) {
+                Write-Host "Checking if the powershell config folder is present..."
+                New-Item $HOME/.config/powershell -Type Directory
+            }
             New-Item $PROFILE.CurrentUserCurrentHost | Out-Null
         }
         Default {continue}
