@@ -4,7 +4,7 @@ BeforeAll {
     Import-Module -Name "$PSScriptRoot/../module/tftools.psd1" -Force -ErrorAction Stop
     # Check if a $profile exists, and create one if it doesn't.
     try {
-        Test-Path $PROFILE -ErrorAction Stop
+        Get-Item $PROFILE -ErrorAction Stop
     }
     catch {
         # Making sure the .config/powershell directories are present
