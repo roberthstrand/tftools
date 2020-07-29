@@ -9,7 +9,11 @@ function Install-Terraform {
         # Disable logo, if called by another cmdlet
         [Parameter()]
         [switch]
-        $DisableLogo
+        $DisableLogo,
+        # Automatically set the downloaded version as the active one
+        [Parameter()]
+        [switch]
+        $SetAsActive
     )
     <#----------------------------------------------+
     |The secret to getting ahead is getting started |
@@ -95,14 +99,19 @@ function Install-Terraform {
                 # Unzip that sucker!
                 Export-ZipFile -ZipFile $tempFile -OutputFolder "$tfPath/$Version"
                 
-                # Ask the user if they want to set the downloaded Terraform as the active version
-                $userResponse = Read-Host "You want to set v$Version as the active version? `n(Y)es or (n)o?"
-                # If they answer yes...
-                switch ($userResponse.ToLower()) {
-                    y {
-                        Set-TerraformVersion -Version $Version
+                # If the switch SetAsActive is present, automatically set the active version
+                if ($SetAsActive) {
+                    Set-TerraformVersion -Version $Version
+                } else {
+                    # Ask the user if they want to set the downloaded Terraform as the active version
+                    $userResponse = Read-Host "You want to set v$Version as the active version? `n(Y)es or (n)o?"
+                    # If they answer yes...
+                    switch ($userResponse.ToLower()) {
+                        y {
+                            Set-TerraformVersion -Version $Version
+                        }
+                        Default { continue }
                     }
-                    Default { continue }
                 }
             }
             Default {

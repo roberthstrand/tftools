@@ -1,7 +1,12 @@
 function Get-TerraformVersion {
-    Write-tftoolsLogo
-    Write-Host "Versions of Terraform, switch active version by using Set-TerraformVersion"
-    
+    param (
+        [switch]
+        $SilentlyRun
+    )
+    if (!$SilentlyRun) {
+        Write-tftoolsLogo
+        Write-Host "Versions of Terraform, switch active version by using Set-TerraformVersion"
+    }
     # Get the library path and get the currently available versions
     Set-PlatformVariables
     $versionsAvailable = (Get-ChildItem $tfPath -Directory).Name
@@ -13,14 +18,17 @@ function Get-TerraformVersion {
     catch {
         Write-Warning "There are no versions of Terraform currently active."
     }
+    $results = New-Object -TypeName System.Collections.ArrayList
+    $results.Clear()
+
     $versionsAvailable | ForEach-Object {
         if ($_ -match "($activeVersion\b)") {
-            Write-host "* $_" -ForegroundColor Green
-        }
-        else {
-            Write-host "  $_"
+            $results.add("> $_") | Out-Null
+        } else {
+            $results.add("  $_") | Out-Null
         }
     }
+    return $results
 }
 function Set-TerraformVersion {
     param (

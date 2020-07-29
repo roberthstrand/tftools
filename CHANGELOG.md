@@ -1,5 +1,11 @@
 # tftools Release History
 
+## 0.3.0 [2020-07-29]
+
+### Defining the latest version + bug fixes
+
+Some major changes to make it easier to do Pester tests on the code, and to make it easier to use Azure DevOps pipelines for automatic testing and publishing.
+
 ## 0.2.5 [2020-07-29]
 
 ### Defining the latest version + bug fixes
