@@ -8,7 +8,10 @@ BeforeAll {
     Set-PlatformVariables
     # Check if a $profile exists, and create one if it doesn't.
     switch (Test-Path $PROFILE.CurrentUserCurrentHost -ErrorAction Stop) {
-        false { New-Item $PROFILE.CurrentUserCurrentHost | Out-Null}
+        false {
+            New-Item $HOME/.config/powershell -Type Directory
+            New-Item $PROFILE.CurrentUserCurrentHost | Out-Null
+        }
         Default {continue}
     }
 }
