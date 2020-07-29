@@ -10,7 +10,7 @@ function Set-PlatformVariables {
         $global:machineOS = "linux_amd64"
         if ($env:PATH -notlike "*$tfPath*") {
             $env:PATH += $tfPath
-            '$env:PATH' + " += $tfPath" | Add-Content -Path $PROFILE -ErrorAction SilentlyContinue
+            '$env:PATH' + " += $tfPath" | Add-Content -Path $PROFILE
         }
     }
     elseif (!$PSVersionTable.Platform) {

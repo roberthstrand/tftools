@@ -7,8 +7,8 @@ BeforeAll {
     . $PSScriptRoot/pester.helpers.ps1
     Set-PlatformVariables
     # Check if a $profile exists, and create one if it doesn't.
-    switch (Test-Path $PROFILE -ErrorAction Stop) {
-        false { New-Item $profile | Out-Null}
+    switch (Test-Path $PROFILE.CurrentUserCurrentHost -ErrorAction Stop) {
+        false { New-Item $PROFILE.CurrentUserCurrentHost | Out-Null}
         Default {continue}
     }
 }
