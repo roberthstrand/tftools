@@ -1,5 +1,11 @@
 # tftools Release History
 
+## 0.3.1 [2020-07-29]
+
+### Several bug fixes that rendered the module unusable
+
+Fixed code that was working for me, but wouldn't be able to work on other computers. Things that happen when hardcode paths...
+
 ## 0.3.0 [2020-07-29]
 
 ### Defining the latest version + bug fixes

@@ -75,7 +75,7 @@ function Install-Terraform {
         elseif ($tfReleases -notcontains $Version) {
             # Stops everything if the version requested doesn't exist
             Write-Error "Invalid version"
-            exit
+            break
         }
     }
     process {
@@ -113,21 +113,19 @@ function Install-Terraform {
                         Default { continue }
                     }
                 }
+                Write-Host "v$Version downloaded" -ForegroundColor Green
+                if ($userResponse -eq "y") { Write-Host "And activated!" -ForegroundColor Magenta }
+                # Cleanup on isle five
+                Remove-Item -Path $tempFile
             }
             Default {
                 Write-Error "v$Version already exist"
-                exit
+                continue
             }
         }
     }
     # Don’t adventures ever have an end? 
     # I suppose not. Someone else always has to carry on the story.
-    end {
-        Write-Host "v$Version downloaded" -ForegroundColor Green
-        if ($userResponse -eq "y") { Write-Host "And activated!" -ForegroundColor Magenta }
-        # Cleanup on isle five
-        Remove-Item -Path $tempFile
-    }
 }
 function Remove-Terraform {
     param (
