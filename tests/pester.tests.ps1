@@ -48,3 +48,10 @@ Describe 'Checking Remove-Terraform' {
         Test-Path -Path "$tfPath/0.12.25" | Should -Be $false
     }
 }
+
+Describe 'Testing that the $PROFILE looks correct' {
+    It "Profile should have the correct value in it" {
+        Get-Content $PROFILE | Should -Contain "env:PATH +="
+        Get-Content $PROFILE
+    }
+}
