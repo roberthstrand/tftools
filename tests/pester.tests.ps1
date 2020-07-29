@@ -21,6 +21,7 @@ Describe 'Checking Install-Terraform' {
     }
     # Downloads a specific version of Terraform, and checking that the correct version is present
     It 'Downloading a specific version and checking that Terraform is actually present with that version' {
+        Set-PlatformVariables
         Install-Terraform -Version 0.12.25 -SetAsActive -DisableLogo
         $terraform = terraform -v
         $terraform -match "v0.12.25"
