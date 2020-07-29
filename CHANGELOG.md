@@ -1,5 +1,11 @@
 # tftools Release History
 
+## 0.3.5 [2020-07-29]
+
+### Adding Mac support and pester tests
+
+Mac support added, as well as more pester tests to check adding and removing of terraform installations.
+
 ## 0.3.1 [2020-07-29]
 
 ### Several bug fixes that rendered the module unusable

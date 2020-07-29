@@ -1,5 +1,7 @@
 # tftools
 
+[![Build Status](https://dev.azure.com/robstrdev/tftools/_apis/build/status/Crossplatform%20tests?branchName=master)](https://dev.azure.com/robstrdev/tftools/_build/latest?definitionId=1&branchName=master)
+
 Terraform tools, a PowerShell module for Terraform administrators.
 
 There are times where you have to use a certain version of the Terraform CLI tool, either because you have a defined version set in your code or you have configurations both in 0.12 and 0.11. With this tool you will be able to:
@@ -24,8 +26,8 @@ Updating the module:
 Update-Module -Name tftools
 ```
 
-## Note about Linux and Mac support
-I don't want to create anything that isn't cross-platform but to get a minimum viable product I focused on getting Windows functionality in place first. At several points there are platform specific code, so this first release will not work on Mac or Linux. This is a high priority for me and will probably be fixed in a couple of days time.
+## Note about Mac support
+I don't want to create anything that isn't cross-platform but to get a minimum viable product I focused on getting Windows and Linux functionality in place first. Currently working on code to get Mac onboard as well.
 
 ### OS compability checklist
 

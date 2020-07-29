@@ -102,7 +102,8 @@ function Install-Terraform {
                 # If the switch SetAsActive is present, automatically set the active version
                 if ($SetAsActive) {
                     Set-TerraformVersion -Version $Version
-                } else {
+                }
+                else {
                     # Ask the user if they want to set the downloaded Terraform as the active version
                     $userResponse = Read-Host "You want to set v$Version as the active version? `n(Y)es or (n)o?"
                     # If they answer yes...
@@ -133,11 +134,19 @@ function Remove-Terraform {
         [Parameter(Mandatory, Position = 0)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Version
+        $Version,
+        [bool]
+        $Confirm
     )
     Set-PlatformVariables
+    $removeSplat = @{
+        Path        = "$tfPath/$Version"
+        Force       = $true
+        recurse     = $true
+        confirm     = $Confirm
+    }
     try {
-        Remove-Item "$tfPath/$Version" -Force -ErrorAction Stop
+        Remove-Item @removeSplat -ErrorAction Stop
     }
     catch {
         Write-Error "Version not found"
