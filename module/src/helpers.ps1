@@ -29,30 +29,50 @@ function Export-ZipFile {
 function Set-PlatformVariables {
     if ($PSVersionTable.Platform -eq "Win32NT") {
         # Windows, PowerShell 6+
+        Add-tfProfile
         $global:tfPath = $env:USERPROFILE + "\.tftools"
         $global:machineOS = "windows_amd64"
         $global:execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
     }
     elseif ($PSVersionTable.OS -like "Linux*") {
+        Add-tfProfile -unix
         $global:tfPath = $HOME + "/.tftools"
         $global:machineOS = "linux_amd64"
         if ($env:PATH -notlike "*$tfPath*") {
             $env:PATH += $tfPath
-            '{0} += "{1}"' -f '$env:PATH',":$tfPath" | Add-Content -Path $PROFILE
+            '{0} += "{1}"' -f '$env:PATH', ":$tfPath" | Add-Content -Path $PROFILE
         }
     }
     elseif ($PSVersionTable.OS -like "Darwin*") {
+        Add-tfProfile -unix
         $global:tfPath = $HOME + "/.tftools"
         $global:machineOS = "darwin_amd64"
         if ($env:PATH -notlike "*$tfPath*") {
             $env:PATH += $tfPath
-            '{0} += "{1}"' -f '$env:PATH',":$tfPath" | Add-Content -Path $PROFILE
+            '{0} += "{1}"' -f '$env:PATH', ":$tfPath" | Add-Content -Path $PROFILE
         }
     }
     elseif (!$PSVersionTable.Platform) {
         # Windows, Windows PowerShell
+        Add-tfProfile
         $global:tfPath = $env:USERPROFILE + "\.tftools" 
         $global:machineOS = "windows_amd64"
         $global:execDir = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+    }
+}
+function Add-tfProfile {
+    param (
+        [switch]
+        $unix
+    )
+    switch ($unix) {
+        $true {
+            New-Item $HOME/.config -Type Directory -ErrorAction SilentlyContinue
+            New-Item $HOME/.config/powershell -Type Directory -ErrorAction SilentlyContinue
+            New-Item $PROFILE -ErrorAction SilentlyContinue
+        }
+        default {
+            New-Item $PROFILE -ErrorAction SilentlyContinue
+        }
     }
 }
