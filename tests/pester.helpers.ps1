@@ -9,8 +9,8 @@ function Set-PlatformVariables {
         $global:tfPath = $HOME + "/.tftools"
         $global:machineOS = "linux_amd64"
         if ($env:PATH -notlike "*$tfPath*") {
-            $env:PATH += ":/home/rs/.tftools"
-            '$env:PATH += ":/home/rs/.tftools"' | Add-Content -Path $PROFILE
+            $env:PATH += $tfPath
+            '$env:PATH' + " += $tfPath" | Add-Content -Path $PROFILE
         }
     }
     elseif (!$PSVersionTable.Platform) {
