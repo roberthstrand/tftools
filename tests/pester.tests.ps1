@@ -4,23 +4,14 @@ BeforeAll {
     Import-Module -Name "$PSScriptRoot/../module/tftools.psd1" -Force -ErrorAction Stop
     # Check if a $profile exists, and create one if it doesn't.
     try {
-        Test-Path $PROFILE.CurrentUserCurrentHost -ErrorAction Stop
+        Test-Path $PROFILE -ErrorAction Stop
     }
     catch {
         # Making sure the .config/powershell directories are present
-        try {
-            Test-Path $HOME/.config -ErrorAction Stop
-        }
-        catch {
-            New-Item $HOME/.config -Type Directory
-        }
-        try {
-            Test-Path $HOME/.config/powershell -ErrorAction Stop
-        }
-        catch {
-            New-Item $HOME/.config/powershell -Type Directory
-        }
-        New-Item $PROFILE.CurrentUserCurrentHost | Out-Null
+        New-Item $HOME/.config -Type Directory
+        Test-Path $HOME/.config/powershell -ErrorAction Stop
+        New-Item $HOME/.config/powershell -Type Directory
+        New-Item $PROFILE | Out-Null
     }
     # Figure out what platform we are running on and set the appropriate variables
     . $PSScriptRoot/../module/src/helpers.ps1
