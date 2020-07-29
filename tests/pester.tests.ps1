@@ -2,10 +2,6 @@
 # Import the module
 BeforeAll {
     Import-Module -Name "$PSScriptRoot/../module/tftools.psm1" -Force -ErrorAction Stop
-    
-    # Figure out what platform we are running on and set the appropriate variables
-    . $PSScriptRoot/pester.helpers.ps1
-    Set-PlatformVariables
     # Check if a $profile exists, and create one if it doesn't.
     switch (Test-Path $PROFILE.CurrentUserCurrentHost -ErrorAction Stop) {
         false {
@@ -21,6 +17,9 @@ BeforeAll {
         }
         Default {continue}
     }
+    # Figure out what platform we are running on and set the appropriate variables
+    . $PSScriptRoot/pester.helpers.ps1
+    Set-PlatformVariables
 }
 Describe 'Making sure the module loaded correctly' {
     It 'checks that the module is present' {
