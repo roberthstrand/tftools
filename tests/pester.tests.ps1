@@ -6,6 +6,11 @@ BeforeAll {
     # Figure out what platform we are running on and set the appropriate variables
     . $PSScriptRoot/pester.helpers.ps1
     Set-PlatformVariables
+    # Check if a $profile exists, and create one if it doesn't.
+    switch (Test-Path $PROFILE -ErrorAction Stop) {
+        false { New-Item $profile | Out-Null}
+        Default {continue}
+    }
 }
 Describe 'Making sure the module loaded correctly' {
     It 'checks that the module is present' {
