@@ -3,7 +3,7 @@
 BeforeAll {
     Import-Module -Name "$PSScriptRoot/../tftools/tftools.psd1" -Force -ErrorAction Stop
     # Figure out what platform we are running on and set the appropriate variables
-    . $PSScriptRoot/../module/src/helpers.ps1
+    . $PSScriptRoot/../tftools/src/helpers.ps1
     Set-PlatformVariables
 }
 
