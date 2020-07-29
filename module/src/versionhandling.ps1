@@ -45,11 +45,13 @@ function Set-TerraformVersion {
         # On linux, we copy the file to the library folder and add that to $Env:PATH through our $PROFILE
         # TODO: Check whether the Unix flow will be the right one for all platforms, so that we can have one less switch, maybe...
         switch ($machineOS) {
-            "linux_amd64" {
+            "windows_amd64" {
+                Copy-Item -Path "$tfPath/$Version/terraform.exe" -Destination $execDir -Force -ErrorAction Stop
+            }
+            Default {
                 Copy-Item -Path "$tfPath/$Version/terraform" -Destination $tfPath -Force -ErrorAction Stop
                 chmod +x "$tfPath/terraform"
             }
-            Default { Copy-Item -Path "$tfPath/$Version/terraform.exe" -Destination $execDir -Force -ErrorAction Stop}
         }
     }
     catch {
