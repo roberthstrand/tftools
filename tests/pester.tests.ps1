@@ -9,9 +9,8 @@ BeforeAll {
     catch {
         # Making sure the .config/powershell directories are present
         New-Item $HOME/.config -Type Directory
-        Test-Path $HOME/.config/powershell -ErrorAction Stop
         New-Item $HOME/.config/powershell -Type Directory
-        New-Item $PROFILE | Out-Null
+        New-Item $PROFILE
     }
     # Figure out what platform we are running on and set the appropriate variables
     . $PSScriptRoot/../module/src/helpers.ps1
