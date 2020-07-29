@@ -48,7 +48,7 @@ function Set-PlatformVariables {
         $global:tfPath = $HOME + "/.tftools"
         $global:machineOS = "darwin_amd64"
         if ($Env:PATH -notlike "*$tfPath*") {
-            $Env:PATH += $tfPath
+            $Env:PATH += ":$tfPath"
             '{0} += "{1}"' -f '$Env:PATH', ":$tfPath" | Add-Content -Path $PROFILE
         }
     }
