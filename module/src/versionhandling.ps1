@@ -46,10 +46,10 @@ function Set-TerraformVersion {
         # TODO: Check whether the Unix flow will be the right one for all platforms, so that we can have one less switch, maybe...
         switch ($machineOS) {
             "windows_amd64" {
-                Copy-Item -Path "$tfPath/$Version/terraform.exe" -Destination $execDir -Force -ErrorAction Stop
+                Copy-Item -Path "$tfPath/$Version/terraform.exe" -Destination "$execDir/terraform.exe" -Force -ErrorAction Stop
             }
             Default {
-                Copy-Item -Path "$tfPath/$Version/terraform" -Destination $tfPath -Force -ErrorAction Stop
+                Copy-Item -Path "$tfPath/$Version/terraform" -Destination "$tfPath/terraform" -Force -ErrorAction Stop
                 chmod +x "$tfPath/terraform"
             }
         }
