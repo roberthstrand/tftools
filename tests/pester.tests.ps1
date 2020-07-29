@@ -8,8 +8,8 @@ BeforeAll {
     }
     catch {
         # Making sure the .config/powershell directories are present
-        New-Item $HOME/.config -Type Directory
-        New-Item $HOME/.config/powershell -Type Directory
+        New-Item $HOME/.config -Type Directory -ErrorAction SilentlyContinue
+        New-Item $HOME/.config/powershell -Type Directory -ErrorAction SilentlyContinue
         New-Item $PROFILE
     }
     # Figure out what platform we are running on and set the appropriate variables
