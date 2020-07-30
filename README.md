@@ -26,13 +26,10 @@ Updating the module:
 Update-Module -Name tftools
 ```
 
-## Note about Mac support
-I don't want to create anything that isn't cross-platform but to get a minimum viable product I focused on getting Windows and Linux functionality in place first. Currently working on code to get Mac onboard as well.
-
 ### OS compability checklist
 
 - [X] Windows 10, PowerShell 7.02
 - [X] Windows 10, PowerShell 5.1
 - [X] Linux WSL
-- [X] Ubuntu 20.04
-- [ ] Mac
+- [X] Ubuntu 20.04, 18.04
+- [X] Mac
