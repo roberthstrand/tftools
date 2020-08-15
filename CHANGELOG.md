@@ -1,6 +1,6 @@
 # tftools Release History
 
-## 0.3.5 [2020-07-29]
+## 0.3.6 [2020-08-15]
 
 ### Speed improvements
 
