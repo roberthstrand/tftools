@@ -2,6 +2,14 @@
 
 ## 0.3.5 [2020-07-29]
 
+### Speed improvements
+
+Added `$ProgressPreference = 'SilentlyContinue'` to speed up downloads.
+
+Thanks to @janegilring for the tip!
+
+## 0.3.5 [2020-07-29]
+
 ### Adding Mac support and more pester tests
 
 Mac support added, as well as more pester tests to check adding and removing of terraform installations.

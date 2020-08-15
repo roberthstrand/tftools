@@ -7,7 +7,7 @@ function Write-tftoolsLogo {
     Write-Host " / __/ /_/ __/ __ \/ __ \/ / ___/" -ForegroundColor DarkMagenta
     Write-Host "/ /_/ __/ /_/ /_/ / /_/ / (__  ) " -ForegroundColor DarkMagenta
     Write-Host "\__/_/  \__/\____/\____/_/____/  " -ForegroundColor DarkMagenta
-    Write-Host "                      v0.3.5     " -ForegroundColor DarkGray
+    Write-Host "                      v0.3.6     " -ForegroundColor DarkGray
 }
 # This one is pretty cool, and we could probably have used a different
 # module for working with Zip files but this is a cool scripting exercise

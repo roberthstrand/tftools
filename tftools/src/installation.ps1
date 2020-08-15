@@ -94,6 +94,7 @@ function Install-Terraform {
                     OutFile         = $tempFile
                     UseBasicParsing = $true
                 }
+                $ProgressPreference = 'SilentlyContinue'
                 Invoke-WebRequest @downloadSplat
                 
                 # Unzip that sucker!
