@@ -2,7 +2,7 @@
 
 ## Version handling
 
-* [Install-Terraform](install-terraform.md)
-* [Remove-Terraform](remove-terraform.md)
-* [Set-TerraformVersion](set-terraformversion.md)
-* [Get-TerraformVersion](get-terraformversion.md)
+* [Install-Terraform](Install-Terraform.md)
+* [Remove-Terraform](Remove-Terraform.md)
+* [Set-TerraformVersion](Set-TerraformVersion.md)
+* [Get-TerraformVersion](Get-TerraformVersion.md)
