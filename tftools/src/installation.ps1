@@ -1,4 +1,47 @@
 function Install-Terraform {
+        <#
+    .SYNOPSIS
+
+    Installs the Terraform CLI tool.
+
+    .DESCRIPTION
+
+    Downloads and installs either a specific version of Terraform, or the latest one available.
+
+    .PARAMETER Version
+    Version of Terraform to install.
+
+    .PARAMETER DisableLogo
+    Disables the logo.
+
+    .PARAMETER SetAsActive
+    Automatically set the downloaded version as the active one.
+
+    .INPUTS
+
+    None. You cannot pipe objects to Install-Terraform.
+
+    .OUTPUTS
+
+    System string.
+
+    .EXAMPLE
+
+    Install-Terraform
+
+    .EXAMPLE
+
+    Install-Terraform -Version 0.13.1
+
+    .EXAMPLE
+
+    Install-Terraform 0.13.1 -SetAsActive
+
+    .LINK
+
+    https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
+
+    #>
     [CmdletBinding()]
     param (
         [Parameter(Position = 0)]
