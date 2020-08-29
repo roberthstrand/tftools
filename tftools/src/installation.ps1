@@ -1,16 +1,12 @@
-# ---- Installation of Terraform ---- #
 function Install-Terraform {
     [CmdletBinding()]
     param (
-        # Version of Terraform to install
         [Parameter(Position = 0)]
         [string]
         $Version,
-        # Disable logo, if called by another cmdlet
         [Parameter()]
         [switch]
         $DisableLogo,
-        # Automatically set the downloaded version as the active one
         [Parameter()]
         [switch]
         $SetAsActive
