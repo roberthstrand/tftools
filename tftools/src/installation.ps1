@@ -1,5 +1,5 @@
 function Install-Terraform {
-        <#
+    <#
     .SYNOPSIS
 
     Installs the Terraform CLI tool.
@@ -39,7 +39,7 @@ function Install-Terraform {
 
     .LINK
 
-    https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
+    https://github.com/roberthstrand/tftools/docs/Install-TerraformVersion.md
 
     #>
     [CmdletBinding()]
@@ -169,6 +169,39 @@ function Install-Terraform {
     # I suppose not. Someone else always has to carry on the story.
 }
 function Remove-Terraform {
+    <#
+    .SYNOPSIS
+
+    Removes a version of the Terraform CLI tool.
+
+    .DESCRIPTION
+
+    Removes a version of Terraform from the local version library.
+
+    .PARAMETER Version
+    Version of Terraform to remove.
+
+    .INPUTS
+
+    None. You cannot pipe objects to Install-Terraform.
+
+    .OUTPUTS
+
+    System string.
+
+    .EXAMPLE
+
+    Remove-Terraform
+
+    .EXAMPLE
+
+    Remove-Terraform -Version 0.13.1
+
+    .LINK
+
+    https://github.com/roberthstrand/tftools/docs/Remove-Terraform.md
+
+    #>
     param (
         # Terraform version
         [Parameter(Mandatory, Position = 0)]

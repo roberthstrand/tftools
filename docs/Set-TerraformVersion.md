@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-TerraformVersion
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Sets the active version of Terraform.
 
 ## SYNTAX
 
@@ -17,21 +17,30 @@ Set-TerraformVersion [-Version] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Set the version of Terraform that you want active.
+If the version doesn't exists in the library, it will ask to download the version.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Set-TerraformVersion
 ```
 
-{{ Add example description here }}
+### EXAMPLE 2
+```
+Set-TerraformVersion -Version 0.13.1
+```
+
+### EXAMPLE 3
+```
+Set-TerraformVersion 0.13.1
+```
 
 ## PARAMETERS
 
 ### -Version
-{{ Fill Version Description }}
+Version of Terraform to set as active.
 
 ```yaml
 Type: String
@@ -39,7 +48,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -50,10 +59,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
+### None. You cannot pipe objects to Set-TerraformVersion.
 ## OUTPUTS
 
-### System.Object
+### System string.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md](https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md)
+
