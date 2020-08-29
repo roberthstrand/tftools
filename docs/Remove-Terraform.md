@@ -1,14 +1,14 @@
 ---
 external help file: tftools-help.xml
 Module Name: tftools
-online version: https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
+online version: https://github.com/roberthstrand/tftools/docs/Remove-Terraform.md
 schema: 2.0.0
 ---
 
 # Remove-Terraform
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Removes a version of the Terraform CLI tool.
 
 ## SYNTAX
 
@@ -17,18 +17,36 @@ Remove-Terraform [-Version] <String> [-Confirm <Boolean>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Removes a version of Terraform from the local version library.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Remove-Terraform
 ```
 
-{{ Add example description here }}
+### EXAMPLE 2
+```
+Remove-Terraform -Version 0.13.1
+```
 
 ## PARAMETERS
+
+### -Version
+Version of Terraform to remove.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Confirm
 Prompts you for confirmation before running the cmdlet.
@@ -40,22 +58,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Version
-{{ Fill Version Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -65,10 +68,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
+### None. You cannot pipe objects to Install-Terraform.
 ## OUTPUTS
 
-### System.Object
+### System string.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/roberthstrand/tftools/docs/Remove-Terraform.md](https://github.com/roberthstrand/tftools/docs/Remove-Terraform.md)
+

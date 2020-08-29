@@ -1,4 +1,30 @@
 function Get-TerraformVersion {
+    <#
+    .SYNOPSIS
+
+    Display all installed versions of Terraform.
+
+    .DESCRIPTION
+
+    Display all versions of Terraform that are in the library, highlighting the current active version.
+
+    .INPUTS
+
+    None. You cannot pipe objects to Get-TerraformVersion.
+
+    .OUTPUTS
+
+    System string.
+
+    .EXAMPLE
+
+    Get-TerraformVersion
+
+    .LINK
+
+    https://github.com/roberthstrand/tftools/docs/Get-TerraformVersion.md
+
+    #>
     param (
         [switch]
         $SilentlyRun
@@ -13,16 +39,17 @@ function Get-TerraformVersion {
     
     # Find out what the current version of Terraform is, or give a warning of there are none
     try {
-        $activeVersion = ((terraform --version | select-string -Pattern "([\d]+.[\d]+.[\d]+-[\w]+[\d]+|[\d]+.[\d]+.[\d]+)").Matches.Value | Select-Object -First 1)
+        $activeVersion = ((terraform --version | select-string -Pattern "([\d]+.[\d]+.[\d]+-[\w]+[\d]+|[\d]+.[\d]+.[\d]+)").Matches.Value | Select-Object -First 1 -ErrorAction Stop)
     }
     catch {
+        $noActive = $true
         Write-Warning "There are no versions of Terraform currently active."
     }
     $results = New-Object -TypeName System.Collections.ArrayList
     $results.Clear()
 
     $versionsAvailable | ForEach-Object {
-        if ($_ -match "($activeVersion\b)") {
+        if (($_ -match "($activeVersion\b)")-and (!$noActive)) {
             $results.add("> $_") | Out-Null
         } else {
             $results.add("  $_") | Out-Null
@@ -31,6 +58,40 @@ function Get-TerraformVersion {
     return $results
 }
 function Set-TerraformVersion {
+    <#
+    .SYNOPSIS
+
+    Sets the active version of Terraform.
+
+    .DESCRIPTION
+
+    Set the version of Terraform that you want active. If the version doesn't exists in the library, it will ask to download the version.
+
+    .PARAMETER Version
+    Version of Terraform to set as active.
+
+    .INPUTS
+
+    None. You cannot pipe objects to Set-TerraformVersion.
+
+    .OUTPUTS
+
+    System string.
+
+    .EXAMPLE
+    Set-TerraformVersion
+
+    .EXAMPLE
+    Set-TerraformVersion -Version 0.13.1
+    
+    .EXAMPLE
+    Set-TerraformVersion 0.13.1
+
+    .LINK
+
+    https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
+
+    #>
     param (
         # Terraform version
         [Parameter(Mandatory, Position = 0)]

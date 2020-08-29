@@ -1,5 +1,16 @@
 # tftools Release History
 
+## 0.3.7 [2020-08-29]
+
+### Added documentation, bug fixes.
+
+*Documentation*
+
+Added comment based help on all commands, and generated the documentation with PlatyPS. The docs folder will be published with GitHub pages.
+
+#### Bugfix:
+[*Issue #7*](https://github.com/roberthstrand/tftools/issues/7)
+
 ## 0.3.6 [2020-08-15]
 
 ### Speed improvements

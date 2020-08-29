@@ -9,7 +9,7 @@
 @{
     RootModule        = 'tftools.psm1'
 
-    ModuleVersion     = '0.3.6'
+    ModuleVersion     = '0.3.7'
     GUID              = '92a401a3-d16f-4bb5-89e5-19e2259e63db'
 
     Author            = 'Roberth Strand'

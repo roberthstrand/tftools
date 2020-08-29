@@ -1,7 +1,7 @@
 ---
 external help file: tftools-help.xml
 Module Name: tftools
-online version: https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
+online version: https://github.com/roberthstrand/tftools/docs/Install-TerraformVersion.md
 schema: 2.0.0
 ---
 
@@ -96,5 +96,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md](https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md)
+[https://github.com/roberthstrand/tftools/docs/Install-TerraformVersion.md](https://github.com/roberthstrand/tftools/docs/Install-TerraformVersion.md)
 
