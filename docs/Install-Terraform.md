@@ -1,14 +1,14 @@
 ---
 external help file: tftools-help.xml
 Module Name: tftools
-online version:
+online version: https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
 schema: 2.0.0
 ---
 
 # Install-Terraform
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Installs the Terraform CLI tool.
 
 ## SYNTAX
 
@@ -17,21 +17,29 @@ Install-Terraform [[-Version] <String>] [-DisableLogo] [-SetAsActive] [<CommonPa
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Downloads and installs either a specific version of Terraform, or the latest one available.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Install-Terraform
 ```
 
-{{ Add example description here }}
+### EXAMPLE 2
+```
+Install-Terraform -Version 0.13.1
+```
+
+### EXAMPLE 3
+```
+Install-Terraform 0.13.1 -SetAsActive
+```
 
 ## PARAMETERS
 
 ### -Version
-{{ Fill Version Description }}
+Version of Terraform to install.
 
 ```yaml
 Type: String
@@ -46,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableLogo
-{{ Fill DisableLogo Description }}
+Disables the logo.
 
 ```yaml
 Type: SwitchParameter
@@ -55,13 +63,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -SetAsActive
-{{ Fill SetAsActive Description }}
+Automatically set the downloaded version as the active one.
 
 ```yaml
 Type: SwitchParameter
@@ -70,7 +78,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -80,10 +88,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
+### None. You cannot pipe objects to Install-Terraform.
 ## OUTPUTS
 
-### System.Object
+### System string.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md](https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md)
+

@@ -1,7 +1,7 @@
 ---
 external help file: tftools-help.xml
 Module Name: tftools
-online version:
+online version: https://github.com/roberthstrand/tftools/docs/Set-TerraformVersion.md
 schema: 2.0.0
 ---
 
