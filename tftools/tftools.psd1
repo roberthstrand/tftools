@@ -9,7 +9,7 @@
 @{
     RootModule        = 'tftools.psm1'
 
-    ModuleVersion     = '0.3.7'
+    ModuleVersion     = '0.4.0'
     GUID              = '92a401a3-d16f-4bb5-89e5-19e2259e63db'
 
     Author            = 'Roberth Strand'
@@ -19,10 +19,22 @@
 
     Description       = 'PowerShell tools for working with Terraform'
 
-    FunctionsToExport = @("Install-Terraform", "Remove-Terraform", "Set-TerraformVersion", "Get-TerraformVersion")
+    FunctionsToExport = @(
+        "Install-Terraform"
+        "Remove-Terraform"
+        "Set-TerraformVersion"
+        "Get-TerraformVersion"
+        "Invoke-TerraformPlan"
+        )
     CmdletsToExport   = ''
     VariablesToExport = ''
-    AliasesToExport   = @("itf", "rtf", "gtfv", "stfv")
+    AliasesToExport   = @(
+        "itf"
+        "rtf"
+        "gtfv"
+        "stfv"
+        "itp"
+        )
     PrivateData       = @{
         PSData = @{
             Tags         = @("Terraform")
